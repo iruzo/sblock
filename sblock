@@ -1,0 +1,56 @@
+#!/usr/bin/env sh
+
+tmppath=/tmp/sblock
+mkdir -p $tmppath
+
+if grep -q -wi '# sblock' /etc/hosts; then
+  sed -i '1,/# sblock/!d' /etc/hosts
+  grep -RHn '# sblock' /etc/hosts | awk -F':' '{print $2}' | sed -i "$(cat)d" /etc/hosts
+fi
+
+echo '# sblock' >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/adaway.org/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/adblock-nocoin-list/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/adguard-cname-trackers/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/adguard-simplified/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/dandelionsprout-nordic/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/easylist/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/easylist-ara/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/easylist-bul/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/easylist-ces-slk/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/easylist-deu/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/easylist-fra/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/easylist-heb/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/easylist-ind/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/easylist-ita/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/easylist-kor/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/easylist-lav/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/easylist-lit/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/easylist-nld/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/easylist-por/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/easylist-rus/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/easylist-spa/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/easylist-zho/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/easyprivacy/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/eth-phishing-detect/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/gfrogeye-firstparty-trackers/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/hostsvn/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/kadhosts/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/matomo.org-spammers/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/mitchellkrogza-badd-boyz-hosts/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/pgl.yoyo.org/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/phishing.army/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/socram8888-notonmyshift/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/someonewhocares.org/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/spam404.com/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/stevenblack/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/ublock/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/ublock-abuse/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/ublock-badware/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/ublock-privacy/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/urlhaus/list.txt >> $tmppath/tmp
+curl https://raw.githubusercontent.com/hectorm/hmirror/master/data/winhelp2002.mvps.org/list.txt >> $tmppath/tmp
+sed -i -e 's/^/0.0.0.0 /g' log
+
+cat $tmppath/tmp >> /etc/hosts
+rm -rf $tmppath
